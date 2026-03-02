@@ -10,23 +10,6 @@ This project implements a complete **Extract-Transform-Load (ETL)** pipeline com
 
 ---
 
-## Table of Contents
-
-- [Project Overview](#project-overview)
-- [Project Structure](#project-structure)
-- [Dataset Description](#dataset-description)
-- [ETL Pipeline Phases](#etl-pipeline-phases)
-  - [PHASE 1: Extract](#phase-1-extract)
-  - [PHASE 2: Transform](#phase-2-transform)
-  - [PHASE 3: Visualization](#phase-3-visualization)
-  - [PHASE 4: Load](#phase-4-load)
-- [Key Features](#key-features)
-- [How to Use Locally](#how-to-use-locally)
-- [Dependencies](#dependencies)
-- [Results & Insights](#results--insights)
-
----
-
 ## Project Structure
 
 ```
@@ -35,13 +18,8 @@ flight-delay-dataset/
 ├── README.md                    # Project documentation
 ├── notebooks/
 │   └── etl.ipynb               # Main ETL pipeline notebook
-│
 ├── data/
-│   ├── raw/
-│   │   └── Airline_Delay_Cause.csv (original dataset)
-│   └── processed/
-│       └── cleaned_airline_data.csv (cleaned dataset)
-│
+│   └── transform.csv (cleaned dataset)
 └── requirements.txt            # Python dependencies
 ```
 
@@ -125,7 +103,7 @@ df = kagglehub.dataset_load(
    - Validated numeric ranges
 
 2. **Data Cleaning**
-   - Removed or imputed missing values
+   - Removed missing values
    - Corrected data type inconsistencies
    - Standardized categorical values
 
@@ -158,17 +136,15 @@ df = kagglehub.dataset_load(
    - Highlights strongly correlated variables
 
 2. **Distribution Analysis**
-   - Histograms/KDE plots for key delay metrics
+   - Histograms plots for key delay metrics
    - Distribution of arrival delays
    - Distribution across months and carriers
    - Distribution of delay causes
 
 3. **Additional Visualizations** (3+ more graphs):
    - **Box plots** - Delay distribution by carrier
-   - **Bar charts** - Top airports by delay frequency
-   - **Scatter plots** - Relationship between flight volume and delays
    - **Time series** - Seasonal patterns in delays
-   - **Violin plots** - Distribution comparison across categories
+
 
 **Libraries Used:**
 - `seaborn` - Statistical data visualization
@@ -183,26 +159,8 @@ df = kagglehub.dataset_load(
 
 **How it was done:**
 - Exported cleaned DataFrame to CSV format
-- Saved to `data/processed/cleaned_airline_data.csv`
-- Maintained data integrity during export
+- Saved to `data/transform.csv`
 - Documented column specifications
-
-**Code:**
-```python
-df.to_csv('data/processed/cleaned_airline_data.csv', index=False)
-```
-
----
-
-## Key Features
-
-✅ **Complete ETL Pipeline** - Extract, Transform, Visualize, and Load  
-✅ **Data Quality Assurance** - Validation and cleaning procedures  
-✅ **Comprehensive Visualizations** - 5+ different chart types  
-✅ **Statistical Analysis** - Correlation and distribution analysis  
-✅ **Actionable Insights** - Business intelligence from data  
-✅ **Reproducible Code** - Well-documented Jupyter notebook  
-✅ **Processed Dataset** - Clean CSV ready for further analysis  
 
 ---
 
@@ -256,56 +214,6 @@ df = pd.read_csv('data/raw/Airline_Delay_Cause.csv')
 ```
 
 ---
-
-## Dependencies
-
-```
-pandas>=1.3.0
-numpy>=1.21.0
-matplotlib>=3.4.0
-seaborn>=0.11.0
-jupyter>=1.0.0
-kagglehub>=0.3.13
-```
-
-Install all dependencies with:
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Results & Insights
-
-### Major Findings:
-
-1. **Primary Delay Causes**
-   - Late aircraft arrival is the leading cause of delays
-   - Weather conditions significantly impact specific routes
-   - Carrier-related delays vary considerably by airline
-
-2. **Seasonal Patterns**
-   - Summer months show higher delay frequencies
-   - December peaks due to holiday travel and weather
-   - Spring shows relatively stable delay patterns
-
-3. **Airport Variations**
-   - Larger hub airports experience different delay patterns
-   - Regional airports show unique delay characteristics
-   - Geographic factors influence delay distribution
-
-4. **Carrier Performance**
-   - Significant variation in delay performance across carriers
-   - Some carriers consistently outperform in specific metrics
-   - Operational efficiency varies by route
-
-5. **Correlation Insights**
-   - Strong correlation between flight volume and absolute delays
-   - Weak correlation between different delay cause categories
-   - Total delay time strongly correlated with all component delays
-
----
-
 ## Project Workflow Summary
 
 ```
@@ -317,8 +225,8 @@ pip install -r requirements.txt
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
 │ PHASE 1: EXTRACT                                            │
-│ ├─ Load data from Kaggle using kagglehub                   │
-│ ├─ Verify data structure and shape                         │
+│ ├─ Load data from Kaggle using kagglehub                    │
+│ ├─ Verify data structure and shape                          │
 │ └─ Display sample records                                   │
 └────────────────────┬────────────────────────────────────────┘
                      │
@@ -336,8 +244,8 @@ pip install -r requirements.txt
 ┌─────────────────────────────────────────────────────────────┐
 │ PHASE 3: VISUALIZATION & ANALYSIS                           │
 │ ├─ Correlation heatmaps                                     │
-│ ├─ Distribution plots (histograms, KDE)                    │
-│ ├─ Categorical analysis (box plots, violin plots)           │
+│ ├─ Distribution plots (histograms)                          │
+│ ├─ Categorical analysis (box plots)                         │
 │ ├─ Time series and trend analysis                           │
 │ └─ Generate insights and interpretations                    │
 └────────────────────┬────────────────────────────────────────┘
@@ -345,33 +253,17 @@ pip install -r requirements.txt
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
 │ PHASE 4: LOAD                                               │
-│ ├─ Export cleaned data to CSV                              │
+│ ├─ Export cleaned data to CSV                               │
 │ ├─ Maintain data integrity                                  │
 │ └─ Ready for downstream analysis                            │
 └────────────────────┬────────────────────────────────────────┘
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
-│        END: Processed Data + Insights Generated            │
-│       (cleaned_airline_data.csv + Analysis Reports)        │
+│        END: Processed Data + Insights Generated             │
+│                  (transform.csv)                            │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
-
-## Contact & Support
-
-For questions or suggestions about this project:
-- 📧 GitHub Issues: [Open an issue](https://github.com/shaswat-13/flight-delay-dataset/issues)
-- 👤 GitHub Profile: [@shaswat-13](https://github.com/shaswat-13)
-
----
-
-## License
-
-This project is open source and available under the MIT License. Please ensure you comply with Kaggle's terms of service when using the dataset.
-
----
-
 **Last Updated:** March 2026  
-**Status:** ✅ Complete
